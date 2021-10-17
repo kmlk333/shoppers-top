@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.lti.fsp.FullStackProjectTrainingApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.531 s - in com.lti.fsp.FullStackProjectTrainingApplicationTests

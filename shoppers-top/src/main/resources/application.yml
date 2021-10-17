@@ -1,0 +1,29 @@
+management:
+  endpoints:
+    web:
+      base-path: /my-app/
+      exposure:
+        include: '*'
+
+        
+spring:
+  devtools:
+    add-properties: 'true'
+  profiles:
+    default: dev
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: 'true'  application:    name: shoppers-top-merchant
+    
+server:
+  port: '8082'
+#loggin:
+#  level:
+#    com:
+#      lti:
+#        fsp: TRACE
+#logging:
+#  level:
+#    root: INFO
