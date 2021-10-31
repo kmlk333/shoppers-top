@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    username: web_app
-    url: jdbc:oracle:thin:@//localhost:1521/XE
-    driverClassName: oracle.jdbc.OracleDriver
-    password: root1234
-  jpa:
-    database-platform: org.hibernate.dialect.Oracle12cDialect
