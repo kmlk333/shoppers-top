@@ -3,9 +3,17 @@ package com.ITrator.stm.user.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.ITrator.stm.request.GlobalResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.AbstractPageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,9 +34,12 @@ import com.ITrator.stm.util.Utils;
 public class UserController {
 
 	Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private GlobalResponse globalResponse;
 
 	@GetMapping("/GetUsers")
 	public List<User> getUsers() throws Exception {
@@ -38,12 +49,27 @@ public class UserController {
 		return users;
 	}
 
+	@GetMapping("/GetLimitedUsers")
+	public Page<User> getLimitedUsers(Pageable pageable) throws Exception {
+		System.out.println("in side get users");
+		Page<User> users = userService.getUserPage(pageable);
+		System.out.println("exist from get users");
+		return users;
+	}
+
+
+	@GetMapping("/GetUsersByPage/{pageno}")
+	public List<User> getUsersByPage(@PathVariable("pageno") int pageno){
+		//PageRequest pageReqeust = new
+		return userService.getUserPageByPageNo(PageRequest.of(pageno,5));
+	}
+
 	@GetMapping("/GetUsers/{id}")
 	public User getUser(@PathVariable long id) {
 		Optional<User> user = userService.getUser(id);
 		return user.get();
 	}
-	
+
 	@GetMapping("/GetUsers/{userName}/{isDeleted}")
 	public User getDeletedUser(@PathVariable String userName, @PathVariable String isDeleted) {
 		System.out.println("Inside getDeletedUser");
@@ -51,20 +77,22 @@ public class UserController {
 	}
 
 	@PostMapping("/CreateUser")
-	public User createUser(@RequestBody String requestJson) {
-		
+	public GlobalResponse createUser(@RequestBody String requestJson) {
+
 		GlobalRequest globalRequest = Utils.jsonObjectMapper(requestJson);
 		System.out.println(globalRequest);
 		UserDTO userDTO = globalRequest.getGlobal().getUserData();
-		
+
 		User user = userService.createUser(userDTO);
-	System.out.println(user);
-	return user;
+		globalResponse.setMessage("User is created successfully");
+		globalResponse.setStatusCode(HttpStatus.CREATED);
+		System.out.println(user);
+		return globalResponse;
 	}
 
 	@PutMapping("/UpdateUser/{id}")
 	public User updateUser(@RequestBody String requestJson) {
-		
+
 		GlobalRequest globalRequest = Utils.jsonObjectMapper(requestJson);
 		System.out.println(globalRequest);
 		UserDTO userDTO = globalRequest.getGlobal().getUserData();
