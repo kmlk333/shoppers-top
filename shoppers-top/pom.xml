@@ -11,7 +11,7 @@
 	<groupId>com.lti</groupId>
 	<artifactId>shoppers-top</artifactId>
 	<version>1.0.0</version>
-	<name>shoppers-top project for customer, merhant and broker</name>
+	<name>shoppers-top project for customer, merchant and broker</name>
 	<description>implementation and integration of all the java stack technology to develop a full fledged deployable project</description>
 	<properties>
 		<java.version>11</java.version>
@@ -83,7 +83,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.8.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
